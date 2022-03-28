@@ -1,7 +1,6 @@
 # !/usr/bin/env python
 import copy
 import cv2
-import sys
 import base64
 from baidubce import bce_base_client
 from baidubce.auth import bce_credentials
@@ -10,7 +9,8 @@ from baidubce.http import bce_http_client
 from baidubce.http import handler
 from baidubce.http import http_methods
 from baidubce import bce_client_configuration
-# 危险行为识别 Python示例代码
+
+# 危险行为识别
 class RiskyBehaviorApiCenterClient(bce_base_client.BceBaseClient):
 
     def __init__(self, config=None):
@@ -58,7 +58,6 @@ class RiskyBehaviorApiCenterClient(bce_base_client.BceBaseClient):
             ret, frame = cap.read()
             vout.write(frame)
         vout.release()
-        sys.exit()
 
     def file_str_to_base64(self,filepath):
         video_code = ""
@@ -84,6 +83,6 @@ if __name__ == '__main__':
                                                              endpoint=endpoint)
     filepath = "./data.mp4"
     client = RiskyBehaviorApiCenterClient(config)
-    client.capture_data_as_mp4(filepath=filepath, width=680, height=460, fps=30, timeseconds=5)
+    # client.capture_data_as_mp4(filepath=filepath, width=680, height=460, fps=30, timeseconds=5)
     res = client.detect(filepath)
     print(res.__dict__['raw_data'])

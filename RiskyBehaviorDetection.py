@@ -2,10 +2,10 @@
 # -*- coding: utf-8 -*-
 import cv2
 import base64
-# encoding:utf-8
 import requests
-from urllib.parse import urlencode
+import json
 from urllib.request import Request,urlopen
+from urllib.parse import urlencode,quote
 
 
 def capture_data_as_mp4(filepath, width, height, fps, timeseconds):
@@ -52,12 +52,15 @@ filepath = "./data.mp4"
 headers = {}
 headers[b'Content-Type'] = 'application/x-www-form-urlencoded;charset=UTF-8'
 
-
-body = "data="+str(file_str_to_base64(filepath))
+body={}
+body[b"data"] = file_str_to_base64(filepath)
+data = urlencode(body).encode("utf-8")
 # print("data=" + str(file_str_to_base64(filepath)))
 
-
-request = Request(url,data=bytes(body.encode("utf-8")),headers=headers)
+request = Request(url,data,headers=headers)
 response = urlopen(request)
-print(response.read())
+responseJson = json.loads(response.read())
+
+print(responseJson)
+print(responseJson["result"][0]["name"])
 
