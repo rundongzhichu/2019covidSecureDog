@@ -32,8 +32,23 @@ class ColorLEDControl:
         #RGB三色灯设置为输出模式
         GPIO.setup(pin, model)
 
-    def set_pin_output_level(self,pin,level=GPIO.HIGH):
-        GPIO.output(pin, GPIO.HIGH)
+    def turn_on_RED(self,):
+        GPIO.output(self.LED_R, GPIO.HIGH)
+
+    def turn_on_GREEN(self,):
+        GPIO.output(self.LED_G, GPIO.HIGH)
+
+    def turn_on_BLUE(self,):
+        GPIO.output(self.LED_B, GPIO.HIGH)
+
+    def turn_off_RED(self, ):
+        GPIO.output(self.LED_R, GPIO.LOW)
+
+    def turn_off_GREEN(self, ):
+        GPIO.output(self.LED_G, GPIO.LOW)
+
+    def turn_off_BLUE(self, ):
+        GPIO.output(self.LED_B, GPIO.LOW)
 
     def clean_pin_state(self,):
         GPIO.cleanup()
@@ -48,7 +63,7 @@ class CarRunControl:
     RIGHT_IN2 = 26
     RIGHT_ENB = 13
 
-    def __init__(self,LEFT_IN1,LEFT_IN2,LEFT_ENA,RIGHT_IN1,RIGHT_IN2,RIGHT_ENB,,left_ena_pwm=2000,right_enb_pwm=2000,mode="BCM"):
+    def __init__(self,LEFT_IN1,LEFT_IN2,LEFT_ENA,RIGHT_IN1,RIGHT_IN2,RIGHT_ENB,left_ena_pwm=2000,right_enb_pwm=2000,mode="BCM"):
         # 忽略警告信息
         GPIO.setwarnings(False)
         self.set_mode(mode)
@@ -97,12 +112,12 @@ class CarRunControl:
         self.pwm_LFT_ENA.start(0)
         self.pwm_RIGHT_ENB.start(0)
 
-    def set_left_ena_pwm(self,pwm=2000):
+    def set_left_ena_pwm(self, pwm=2000):
         # 设置pwm引脚和频率为?hz,默认2000hz
         self.pwm_LFT_ENA = GPIO.PWM(self.LEFT_ENA, pwm)
         self.pwm_LFT_ENA.start(0)
 
-    def set_right_enb_pwm(self,pwm=2000):
+    def set_right_enb_pwm(self, pwm=2000):
         # 设置pwm引脚和频率为?hz,默认2000hz
         self.pwm_RIGHT_ENB = GPIO.PWM(self.RIGHT_ENB, pwm)
         self.pwm_RIGHT_ENB.start(0)
@@ -187,7 +202,7 @@ class ServoControl:
 
     # 舵机引脚定义
     UltrasonicServoPin = 23
-    CameraLeftRightServoPin = 11  # S2
+    CameraLeftRightServoPin = 10  # S4 换一个插口解决插口接触不良的问题
     CameraUpDownServoPinB = 9  # S3
 
     def __init__(self, ServoPin=23, pwm=50,mode="BCM"):
@@ -220,7 +235,7 @@ class ServoControl:
         # 设置pin的状态
         GPIO.setup(self.ServoPin, model)
 
-    def set_pwm(self,pwm=50):
+    def set_pwm(self, pwm=50):
         if self.pwm_servo is not None :
             self.pwm_servo.stop()
         # 设置pwm引脚和频率为?hz,默认2000hz
@@ -239,12 +254,12 @@ class ServoControl:
     # 2.5ms控制0-180度
     def servo_pulse(self, angle):
         pulsewidth = (angle * 11) + 500
-        GPIO.output(angle, GPIO.HIGH)
+        GPIO.output(self.ServoPin, GPIO.HIGH)
         time.sleep(pulsewidth / 1000000.0)
         GPIO.output(self.ServoPin, GPIO.LOW)
         time.sleep(20.0 / 1000 - pulsewidth / 1000000.0)
 
-    def servo_pulse1(self,angle):
+    def servo_pulse1(self, angle):
         pulsewidth = angle
         GPIO.output(self.ServoPin, GPIO.HIGH)
         time.sleep(pulsewidth / 1000000.0)
@@ -253,7 +268,7 @@ class ServoControl:
 
     # 根据舵机脉冲控制范围为500-2500usec内：
 
-    def servo_control(self,angle):
+    def servo_control(self, angle):
         if angle < 500:
             angle = 500
         elif angle > 2500:
@@ -412,7 +427,7 @@ class TrackingSensorControl:
     # 0 X 0 1
     # 0 X 1 0
     # 处理左锐角和左直角的转动
-    def is_left_actute_angle_or_right_angle(self):
+    def is_left_actute_angle_or_left_angle(self):
         TrackSensorLeftValue1,_,TrackSensorRightValue1,TrackSensorRightValue2 = self.get_detect_val_of_tracking_sensor()
         return TrackSensorLeftValue1 == False and (TrackSensorRightValue1 == False or TrackSensorRightValue2 == False)
 

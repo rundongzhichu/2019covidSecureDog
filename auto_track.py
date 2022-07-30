@@ -1,8 +1,7 @@
 # -*- encoding: utf-8 -*-
 
 import RPi.GPIO as GPIO
-import time
-from CarHardwareControlModel import CarRunControl as crc
+from com.convid.dog.CarHardwareControlModel import CarRunControl as crc
 
 
 #红外避障接口
