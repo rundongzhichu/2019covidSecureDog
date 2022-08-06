@@ -21,7 +21,7 @@ cv2.namedWindow('Face',flags=cv2.WINDOW_NORMAL | cv2.WINDOW_KEEPRATIO | cv2.WIND
 faces = FaceCascade.detectMultiScale(
     gray,
     scaleFactor=1.1,
-    minNeighbors=5
+    minNeighbors=3
 )
 
 # 遍历返回的face数组

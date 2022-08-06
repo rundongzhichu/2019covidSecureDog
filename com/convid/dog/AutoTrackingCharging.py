@@ -26,8 +26,6 @@ def track():
         elif tsc.is_straight():
             crc.forward(35, 35)
         else:
-            crc.forward(35, 35)
-            # todo
-            # 避障代码逻辑，当离障碍物很近的时候（离充电的地方很近的时候，在一定距离范围内，停下来）
+            crc.brake(0, 0)
 
 

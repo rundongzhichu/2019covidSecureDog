@@ -76,7 +76,7 @@ class CarRunControl:
         self.RIGHT_ENB = RIGHT_ENB
         self.motor_init(left_ena_pwm,right_enb_pwm)
 
-    def set_mode(self,mode="BCM"):
+    def set_mode(self, mode="BCM"):
         if mode == "BCM":
             #设置RGB三色灯为BCM编码方式
             GPIO.setmode(GPIO.BCM)
@@ -205,7 +205,7 @@ class ServoControl:
     CameraLeftRightServoPin = 10  # S4 换一个插口解决插口接触不良的问题
     CameraUpDownServoPinB = 9  # S3
 
-    def __init__(self, ServoPin=23, pwm=50,mode="BCM"):
+    def __init__(self, ServoPin=23, pwm=50, mode="BCM"):
         # 忽略警告信息
         GPIO.setwarnings(False)
         self.set_mode(mode)

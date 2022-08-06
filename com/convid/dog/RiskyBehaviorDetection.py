@@ -6,7 +6,6 @@ import requests
 import json
 from urllib.request import Request,urlopen
 from urllib.parse import urlencode
-import RPi.GPIO as GPIO
 
 from com.convid.dog.CarHardwareControlModel import ColorLEDControl, BuzzerControl
 
@@ -65,7 +64,7 @@ def checkRiskBehavior():
     body[b"data"] = file_str_to_base64(filepath)
     data = urlencode(body).encode("utf-8")
 
-    request = Request(url,data,headers=headers)
+    request = Request(url, data, headers=headers)
     response = urlopen(request)
     jsonResponse = json.loads(response.read())
 

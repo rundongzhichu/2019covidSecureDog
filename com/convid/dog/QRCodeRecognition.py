@@ -105,8 +105,7 @@ def detect():
     camera.release()
     cv2.destroyAllWindows()
 
-while 1:
-    detect()
+detect()
 
 
 
